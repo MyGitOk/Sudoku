@@ -34,6 +34,9 @@ int main()
 	SetConsoleCursorPosition(h, pozition);
 	COORD panel;
 
+	cout << "practice\n";
+	system("cls");
+
 	while (true)
 	{
 		panel = { 12, 0 };
@@ -84,6 +87,8 @@ int main()
 		{
 			MessageBoxA(0, "VICTORY", "SUDOKU", MB_OK);
 		}
+
+		
 
 
 	}
