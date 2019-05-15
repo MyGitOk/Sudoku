@@ -18,10 +18,12 @@ void hide_visible(cell*** field, const int& size, int level);
 //bool check_col(int** ar, const int& h, const int& w, int i);
 //bool check_line(int** ar, const int& h, const int& w, int i);
 //void check_square(int** ar, const int& num, int& h, int& w);
-void show_field(cell** field, const int& size);
+void show_field(cell**& field, const int& size);
+void show_field_gr(cell**& field, const int& size);
+void count_open(cell*** field, const int& size, int& open);
 void print_sucsess_cell(cell*** field, COORD& poz, HANDLE& h, int& check_open);
 void print_wrong_cell(cell*** field, COORD& poz, HANDLE& h, int digit);
-void check_matched(cell*** field, COORD& poz, HANDLE& h, int& check_open, int& key);
+void check_matched(cell**& field, COORD& poz, HANDLE& h, int& check_open, int& key);
 
 
 void create_field(cell** field, const int& size)
@@ -126,7 +128,7 @@ void hide_visible(cell*** field, const int& size, int level)
 	{
 		for (int w = 0; w < size; w++)
 		{
-			hide = rand() % 3;
+			hide = rand() % 5;
 			if (hide == 0)
 			{
 				(*field)[h][w].image = false;
@@ -382,7 +384,7 @@ void hide_visible(cell*** field, const int& size, int level)
 //	}	
 //}
 
-void show_field(cell** field, const int& size)
+void show_field(cell**& field, const int& size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -398,6 +400,40 @@ void show_field(cell** field, const int& size)
 			}
 		}
 		cout << "\n";
+	}
+}
+
+void show_field_gr(cell**& field, const int& size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			if (field[i][j].image == true)
+			{
+				cout << field[i][j].meaning;
+			}
+			else if (field[i][j].image == false)
+			{
+				cout << " ";
+			}
+		}
+		cout << "\n";
+	}
+}
+
+
+void count_open(cell*** field, const int& size, int& open)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			if ((*field)[i][j].image == true)
+			{
+				open++;
+			}
+		}
 	}
 }
 
@@ -418,7 +454,7 @@ void print_wrong_cell(cell*** field, COORD& poz, HANDLE& h, int digit)
 	SetConsoleCursorPosition(h, poz);
 }
 
-void check_matched(cell*** field, COORD& poz, HANDLE& h, int& check_open, int& key)
+void check_matched(cell**& field, COORD& poz, HANDLE& h, int& check_open, int& key)
 {
 	int a = 0;
 	switch (key)
@@ -445,14 +481,14 @@ void check_matched(cell*** field, COORD& poz, HANDLE& h, int& check_open, int& k
 		break;
 	}
 
-	if ((*field)[poz.Y][poz.X].meaning == a &&
-		(*field)[poz.Y][poz.X].image == false)
+	if (field[poz.Y][poz.X].meaning == a &&
+		field[poz.Y][poz.X].image == false)
 	{
-		print_sucsess_cell(field, poz, h, check_open);
+		print_sucsess_cell(&field, poz, h, check_open);
 	}
-	else if ((*field)[poz.Y][poz.X].meaning != a &&
-		(*field)[poz.Y][poz.X].image == false)
+	else if (field[poz.Y][poz.X].meaning != a &&
+		field[poz.Y][poz.X].image == false)
 	{
-		print_wrong_cell(field, poz, h, a);
+		print_wrong_cell(&field, poz, h, a);
 	}
 }

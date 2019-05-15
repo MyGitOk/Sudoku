@@ -1,28 +1,18 @@
 #include"Functions.h"
 
-//HWND hwnd = GetConsoleWindow(); // дескриптор окна, используемый консолью
-//HDC hdc = GetDC(hwnd); // данные типа HDC представл€ют собой 32-разр€дное целое беззнаковое число.
-
 int main()
 {
 	int size_field = 9;
 	cell** field = new cell*[size_field];
+	int level = 1;
+	int check_open = 0;
+
 	create_field(field, size_field);
 	shuffle_field(&field, size_field);
 	shuffle_field(&field, size_field);
-	hide_visible(&field, size_field, 1);
+	hide_visible(&field, size_field, level);
 	show_field(field, size_field);
-	int check_open = 0;
-	for (int i = 0; i < size_field; i++)
-	{
-		for (int j = 0; j < size_field; j++)
-		{
-			if (field[i][j].image == true)
-			{
-				check_open++;
-			}
-		}
-	}
+	count_open(&field, size_field, check_open);
 
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cci;
@@ -34,9 +24,6 @@ int main()
 	SetConsoleCursorPosition(h, pozition);
 	COORD panel;
 
-	cout << "practice\n";
-	system("cls");
-
 	while (true)
 	{
 		panel = { 12, 0 };
@@ -44,13 +31,15 @@ int main()
 		cout << "Open cells: " << check_open;
 		panel.Y++;
 		SetConsoleCursorPosition(h, panel);
-		cout << "Cursor position Y: " << pozition.Y;
+		double progr = (check_open / 81.) * 100;
+		progr = int(progr);
+		cout << "Progress: " << progr << " %";
 		panel.Y++;
 		SetConsoleCursorPosition(h, panel);
-		cout << "Cursor position X: " << pozition.X;
-		panel.Y++;
-		SetConsoleCursorPosition(h, panel);
-		cout << "Cursor image: " << field[pozition.Y][pozition.X].image;
+		cout << char(201);
+		//panel.Y++;
+		//SetConsoleCursorPosition(h, panel);
+		//cout << "Cursor image: " << field[pozition.Y][pozition.X].image;
 
 		SetConsoleCursorPosition(h, pozition);
 
@@ -79,20 +68,30 @@ int main()
 		else if (key == ONE || key == TWO || key == THREE || key == FOUR ||
 			key == FIVE || key == SIX || key == SEVEN || key == EIGHT || key == NINE)
 		{
-			check_matched(&field, pozition, h, check_open, key);
+			check_matched(field, pozition, h, check_open, key);
 		}
-		
 
 		if (check_open == pow(size_field, 2))
 		{
 			MessageBoxA(0, "VICTORY", "SUDOKU", MB_OK);
+			int rezult = MessageBoxA(0, "Do you want to continue?", "SUDOKU", MB_YESNO);
+			if (rezult == IDYES)
+			{
+				system("cls");
+				level++;
+				shuffle_field(&field, size_field);
+				shuffle_field(&field, size_field);
+				hide_visible(&field, size_field, level);
+				check_open = 0;
+				count_open(&field, size_field, check_open);
+				show_field(field, size_field);
+			}
+			else if (rezult == IDNO)
+			{
+				// сохранение в файл
+				return 0;
+			}
 		}
-
-		
-
-
 	}
-	
-
 	_getch();
 }
