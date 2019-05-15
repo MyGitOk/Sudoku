@@ -1,3 +1,4 @@
 ﻿  Source.cpp
-d:\study\itstep\c++\home work\practice\sudoku\sudoku\functions.h(125): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+d:\study\itstep\c++\home work\practice\sudoku\sudoku\functions.h(126): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+d:\study\itstep\c++\home work\practice\sudoku\sudoku\source.cpp(25): warning C4101: panel: неиспользованная локальная переменная
   Sudoku.vcxproj -> D:\Study\itStep\C++\Home Work\Practice\Sudoku\Debug\Sudoku.exe

@@ -405,18 +405,87 @@ void show_field(cell**& field, const int& size)
 
 void show_field_gr(cell**& field, const int& size)
 {
-	for (int i = 0; i < size; i++)
+	for (int h = 0; h < size * 2 + 1; h++)
 	{
-		for (int j = 0; j < size; j++)
+		for (int w = 0; w < size * 4 + 1; w++)
 		{
-			if (field[i][j].image == true)
+			if (h == 0 && w == 0) // верхний левый угол
 			{
-				cout << field[i][j].meaning;
+				cout << char(201);
 			}
-			else if (field[i][j].image == false)
+			else if (h == 0 && w == size * 4) // правый верхний угол
+			{
+				cout << char(187);
+			}
+			else if (h == 0 && w % 4 == 0) // верх пересечение
+			{
+				cout << char(203);
+			}
+			else if (h == 0) // верх без пересечений
+			{
+				cout << char(205);
+			}
+			else if (h == size * 2 && w == 0) // нижний левый угол
+			{
+				cout << char(200);
+			}
+			else if (h % 2 == 0 && w == 0) // пересечения на левой грани
+			{
+				cout << char(204);
+			}
+			else if (w == 0) // вертикальные без пересечений
+			{
+				cout << char(186);
+			}
+			else if (h == size * 2 && w == size * 4) // нижний левый угол
+			{
+				cout << char(188);
+			}
+			else if (h == size * 2 && w % 4 == 0) // нижняя границ с пересечением
+			{
+				cout << char(202);
+			}
+			else if (h == size *2)
+			{
+				cout << char(205);
+			}
+			else if (h % 2 == 0 && w == size * 4)
+			{
+				cout << char(185);
+			}
+			else if (w == size * 4)
+			{
+				cout << char(186);
+			}
+			else if (h % 2 == 0 && w % 4 == 0)
+			{
+				cout << char(206);
+			}
+			else if (h % 2 == 0)
+			{
+				cout << char(205);
+			}
+			else if (w % 4 == 0)
+			{
+				cout << char(186);
+			}
+			else if (w % 2 == 0)
+			{
+				if (field[(h - 1) / 2][(w - 2) / 4].image == true)
+				{
+					cout << field[(h - 1) / 2][(w - 2) / 4].meaning;
+				}
+				else if (field[(h - 1) / 2][(w - 2) / 4].image == false)
+				{
+					cout << " ";
+				}
+				//cout << 1;
+			}
+			else
 			{
 				cout << " ";
 			}
+
 		}
 		cout << "\n";
 	}
