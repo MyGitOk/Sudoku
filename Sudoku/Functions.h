@@ -18,7 +18,7 @@ void hide_visible(cell*** field, const int& size, int level);
 //bool check_col(int** ar, const int& h, const int& w, int i);
 //bool check_line(int** ar, const int& h, const int& w, int i);
 //void check_square(int** ar, const int& num, int& h, int& w);
-void show_field(cell**& field, const int& size);
+//void show_field(cell**& field, const int& size);
 void show_field_gr(cell**& field, const int& size);
 void count_open(cell*** field, const int& size, int& open);
 void print_sucsess_cell(cell*** field, COORD& poz, HANDLE& h, int& check_open);
@@ -128,7 +128,7 @@ void hide_visible(cell*** field, const int& size, int level)
 	{
 		for (int w = 0; w < size; w++)
 		{
-			hide = rand() % 5;
+			hide = rand() % 3;
 			if (hide == 0)
 			{
 				(*field)[h][w].image = false;
@@ -384,24 +384,24 @@ void hide_visible(cell*** field, const int& size, int level)
 //	}	
 //}
 
-void show_field(cell**& field, const int& size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			if (field[i][j].image == true)
-			{
-				cout << field[i][j].meaning;
-			}
-			else if (field[i][j].image == false)
-			{
-				cout << " ";
-			}
-		}
-		cout << "\n";
-	}
-}
+//void show_field(cell**& field, const int& size)
+//{
+//	for (int i = 0; i < size; i++)
+//	{
+//		for (int j = 0; j < size; j++)
+//		{
+//			if (field[i][j].image == true)
+//			{
+//				cout << field[i][j].meaning;
+//			}
+//			else if (field[i][j].image == false)
+//			{
+//				cout << " ";
+//			}
+//		}
+//		cout << "\n";
+//	}
+//}
 
 void show_field_gr(cell**& field, const int& size)
 {
@@ -417,9 +417,13 @@ void show_field_gr(cell**& field, const int& size)
 			{
 				cout << char(187);
 			}
-			else if (h == 0 && w % 4 == 0) // верх пересечение
+			else if (h == 0 && w % 12 == 0) // верх пересечение квадратов
 			{
 				cout << char(203);
+			}
+			else if (h == 0 && w % 4 == 0) // верх пересечение
+			{
+				cout << char(209);
 			}
 			else if (h == 0) // верх без пересечений
 			{
@@ -429,9 +433,13 @@ void show_field_gr(cell**& field, const int& size)
 			{
 				cout << char(200);
 			}
-			else if (h % 2 == 0 && w == 0) // пересечения на левой грани
+			else if (h % 6 == 0 && w == 0) // пересечения на левой грани
 			{
 				cout << char(204);
+			}
+			else if (h % 2  == 0 && w == 0)
+			{
+				cout << char(199);
 			}
 			else if (w == 0) // вертикальные без пересечений
 			{
@@ -441,33 +449,61 @@ void show_field_gr(cell**& field, const int& size)
 			{
 				cout << char(188);
 			}
-			else if (h == size * 2 && w % 4 == 0) // нижняя границ с пересечением
+			else if (h == size * 2 && w % 12 == 0) // нижняя границ с пересечением
 			{
 				cout << char(202);
+			}
+			else if (h == size * 2 && w % 4 == 0) // нижняя границ с пересечением
+			{
+				cout << char(207);
 			}
 			else if (h == size *2)
 			{
 				cout << char(205);
 			}
-			else if (h % 2 == 0 && w == size * 4)
+			else if (h % 6 == 0 && w == size * 4) // правая грань пересечение квадратов
 			{
 				cout << char(185);
+			}
+			else if (h % 2 == 0 && w == size * 4)
+			{
+				cout << char(182);
 			}
 			else if (w == size * 4)
 			{
 				cout << char(186);
 			}
-			else if (h % 2 == 0 && w % 4 == 0)
+			else if (h % 6 == 0 && w % 12 == 0) // пересечения квадратов
 			{
 				cout << char(206);
 			}
-			else if (h % 2 == 0)
+			else if (h % 6 == 0 && w % 4 == 0) // пересечения в квадратах
+			{
+				cout << char(216);
+			}
+			else if (h % 2 == 0 && w % 12 == 0) // пересечения квадратов
+			{
+				cout << char(215);
+			}
+			else if (h % 2 == 0 && w % 4 == 0) // пересечения квадратов
+			{
+				cout << char(197);
+			}
+			else if (h % 6 == 0) // горизонтали по квадратам
 			{
 				cout << char(205);
 			}
-			else if (w % 4 == 0)
+			else if (h % 2 == 0) // горизонтали в квадратах
+			{
+				cout << char(196);
+			}
+			else if (w % 12 == 0) // вертикали по квадратам
 			{
 				cout << char(186);
+			}
+			else if (w % 4 == 0) // вертикали в квадратах
+			{
+				cout << char(179);
 			}
 			else if (w % 2 == 0)
 			{
@@ -479,18 +515,15 @@ void show_field_gr(cell**& field, const int& size)
 				{
 					cout << " ";
 				}
-				//cout << 1;
 			}
 			else
 			{
 				cout << " ";
 			}
-
 		}
 		cout << "\n";
 	}
 }
-
 
 void count_open(cell*** field, const int& size, int& open)
 {
@@ -508,10 +541,10 @@ void count_open(cell*** field, const int& size, int& open)
 
 void print_sucsess_cell(cell*** field, COORD& poz, HANDLE& h, int& check_open)
 {
-	(*field)[poz.Y][poz.X].image = true;
+	(*field)[(poz.Y - 1) / 2][(poz.X - 2) / 4].image = true;
 	check_open++;
 	SetConsoleCursorPosition(h, poz);
-	cout << (*field)[poz.Y][poz.X].meaning;
+	cout << (*field)[(poz.Y - 1) / 2][(poz.X - 2) / 4].meaning;
 }
 
 void print_wrong_cell(cell*** field, COORD& poz, HANDLE& h, int digit)
@@ -550,13 +583,13 @@ void check_matched(cell**& field, COORD& poz, HANDLE& h, int& check_open, int& k
 		break;
 	}
 
-	if (field[poz.Y][poz.X].meaning == a &&
-		field[poz.Y][poz.X].image == false)
+	if (field[(poz.Y - 1) / 2][(poz.X - 2) / 4].meaning == a &&
+		field[(poz.Y - 1) / 2][(poz.X - 2) / 4].image == false)
 	{
 		print_sucsess_cell(&field, poz, h, check_open);
 	}
-	else if (field[poz.Y][poz.X].meaning != a &&
-		field[poz.Y][poz.X].image == false)
+	else if (field[(poz.Y - 1) / 2][(poz.X - 2) / 4].meaning != a &&
+		field[(poz.Y - 1) / 2][(poz.X - 2) / 4].image == false)
 	{
 		print_wrong_cell(&field, poz, h, a);
 	}
