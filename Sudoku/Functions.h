@@ -552,7 +552,7 @@ void print_wrong_cell(cell*** field, COORD& poz, HANDLE& h, int digit)
 	SetConsoleCursorPosition(h, poz);
 	SetConsoleTextAttribute(h, RED);
 	cout << digit;
-	SetConsoleTextAttribute(h, GREY);
+	SetConsoleTextAttribute(h, BLACK);
 	SetConsoleCursorPosition(h, poz);
 }
 
